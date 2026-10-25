@@ -1,0 +1,20 @@
+node_modules
+dist
+dev-dist
+.env
+.env.local
+.env.*.local
+.vercel
+*.log
+.DS_Store
+*.tsbuildinfo
+
+# Project documents kept local only
+AI_USAGE.md
+DEPENDENCIES.md
+METHODS.md
+README.md
+claude.md
+design.md
+Fault_Line_Submission_Dossier.pdf
+docs

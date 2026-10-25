@@ -1,0 +1,128 @@
+@import './styles/tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Monospace is for numerals that align in a column, and for coordinates. */
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+
+/* The only tracked all-caps in the interface is the wordmark. */
+.wordmark { font-size: 1.125rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+
+/* focus: accent, never removed */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button, input, select { font: inherit; color: inherit; }
+button { transition: color 120ms linear, background-color 120ms linear, border-color 120ms linear; }
+
+/* provenance: hue plus shape, so the distinction survives colour-vision
+   deficiency and greyscale print (DESIGN.md §4). */
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 999px; vertical-align: 1px; flex: none; }
+.dot-published { background: var(--src-published); }
+.dot-modeled { background: var(--src-modeled); height: 2px; border-radius: 0; vertical-align: 3px; }
+.dot-proxy { background: transparent; box-shadow: inset 0 0 0 2px var(--src-proxy); }
+.dot-assumed { background: linear-gradient(to right, var(--src-assumed) 0 50%, transparent 50% 100%); box-shadow: inset 0 0 0 1px var(--src-assumed); }
+
+/* controls */
+.field {
+  width: 100%; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 2px;
+  padding: 10px 12px; color: var(--text); min-height: 44px;
+}
+.field::placeholder { color: var(--text-muted); }
+.field:hover { border-color: var(--border-strong); }
+.btn { white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; font-weight: 500; border: 1px solid var(--accent); background: var(--accent); color: var(--bg); border-radius: 2px; }
+.btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn:disabled { opacity: 0.55; }
+.btn-quiet { white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); border-radius: 2px; }
+.btn-quiet:hover { border-color: var(--text-muted); background: var(--surface-2); }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 2px; }
+.icon-btn:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.link { color: var(--text); text-decoration: underline; text-decoration-color: var(--text-muted); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.link:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.seg { display: grid; border: 1px solid var(--border-strong); background: var(--surface); border-radius: 2px; overflow: hidden; }
+.seg > button { min-height: 40px; border-right: 1px solid var(--border); color: var(--text-secondary); font-size: 0.8125rem; }
+.seg > button:last-child { border-right: 0; }
+.seg > button[aria-pressed='true'] { background: var(--surface-2); color: var(--text); font-weight: 500; }
+
+/* show-more: hidden rows stay in the DOM so print keeps them */
+.more-hidden { display: none; }
+
+/* disclosure */
+.disclose > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 8px; min-height: 40px; color: var(--text-secondary); font-size: 0.8125rem; }
+.disclose > summary::-webkit-details-marker { display: none; }
+.disclose > summary::after { content: '+'; margin-left: auto; font-family: var(--font-data); color: var(--text-muted); }
+.disclose[open] > summary::after { content: '−'; }
+.disclose > summary:hover { color: var(--text); }
+
+/* magnitude slider */
+input[type='range'].mag { -webkit-appearance: none; appearance: none; width: 100%; height: 2px; background: var(--surface-2); outline-offset: 8px; }
+input[type='range'].mag::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 24px; border-radius: 2px; background: var(--accent); border: 0; cursor: ew-resize; }
+input[type='range'].mag::-moz-range-thumb { width: 16px; height: 24px; border-radius: 2px; background: var(--accent); border: 0; cursor: ew-resize; }
+
+/* tables: values right-aligned and larger than their labels */
+table.data { width: 100%; border-collapse: collapse; }
+table.data td { padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+table.data tr:last-child td { border-bottom: 0; }
+table.data td.v { text-align: right; font-family: var(--font-data); white-space: nowrap; }
+
+.scroll-thin { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.scroll-thin::-webkit-scrollbar { width: 10px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--border-strong); border: 3px solid var(--bg); border-radius: 999px; }
+
+/* map chrome: every floating control is --surface with a --border hairline */
+.maplibregl-ctrl-attrib {
+  font-size: 11px !important; background: var(--surface) !important; color: var(--text-muted) !important;
+  border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-radius: 0 !important; padding: 2px 8px !important;
+}
+.maplibregl-ctrl-attrib a { color: var(--text-secondary) !important; }
+.maplibregl-ctrl-group { background: var(--surface) !important; border: 1px solid var(--border) !important; border-radius: 2px !important; box-shadow: none !important; }
+.maplibregl-ctrl-group button { width: 32px !important; height: 32px !important; background: transparent !important; }
+.maplibregl-ctrl-group button:hover { background: var(--surface-2) !important; }
+.maplibregl-ctrl-group button + button { border-top: 1px solid var(--border) !important; }
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(0.86); }
+.maplibregl-ctrl-scale {
+  background: var(--surface) !important; border: 1px solid var(--border) !important; border-top: 0 !important;
+  color: var(--text-secondary) !important; font-family: var(--font-data); font-size: 10px !important; border-radius: 0 !important;
+}
+.maplibregl-popup-content {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); border-radius: 2px;
+  font-size: 12px; padding: 8px 10px; box-shadow: none;
+}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip { border-top-color: var(--border-strong); }
+.maplibregl-popup-anchor-top .maplibregl-popup-tip { border-bottom-color: var(--border-strong); }
+
+/* the user's pin: the fourth and last place accent appears */
+.pin { position: relative; width: 22px; height: 22px; }
+.pin .ring { position: absolute; inset: 0; border: 2px solid var(--accent); border-radius: 999px; }
+.pin .dot-core { position: absolute; inset: 8px; background: var(--accent); border-radius: 999px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0ms !important; animation: none !important; } }
+
+/* Print: the household plan assumes the power is out. Ink on white. */
+@media print {
+  html, body, #root { height: auto !important; background: #fff !important; color: #000 !important; }
+  .no-print { display: none !important; }
+  .print-flow { display: block !important; height: auto !important; overflow: visible !important; }
+  .print-flow * { color: #000 !important; background: transparent !important; border-color: #999 !important; }
+  .disclose > summary, .show-more-btn { display: none !important; }
+  .more-hidden { display: block !important; }
+  .disclose > *:not(summary) { display: block !important; }
+  section, table { break-inside: avoid; }
+  .dot { box-shadow: inset 0 0 0 1px #000 !important; background: #000 !important; }
+  .dot-modeled { box-shadow: none !important; }
+  .dot-proxy { background: #fff !important; }
+  .dot-assumed { background: linear-gradient(to right, #000 0 50%, #fff 50% 100%) !important; }
+  .print-disclaimer { display: block; font-size: 9pt; border-top: 1px solid #999; padding-top: 4px; margin-top: 12px; }
+  .field, .btn, .btn-quiet, .seg, .icon-btn { display: none !important; }
+  a[href]::after { content: none !important; }
+}

@@ -1,0 +1,57 @@
+/**
+ * The single source of truth for colour. No hex value appears in any component
+ * file; MapLibre paint properties, which cannot read CSS custom properties, read
+ * the mirrored constants in src/lib/theme.ts, and theme.test.ts asserts the two
+ * stay identical.
+ *
+ * "Instrument" theme (DESIGN.md, Amendments 2026-09-13): one dominant dark
+ * surface so the MMI ramp is the only saturated thing on screen.
+ */
+:root {
+  color-scheme: dark;
+
+  --bg: #0E1114;            /* page and left panel */
+  --surface: #171B20;       /* cards, popovers, map controls */
+  --surface-2: #1F252C;     /* hover, inset tracks, selected rows */
+  --border: #262C33;        /* hairlines */
+  --border-strong: #333B44; /* hover, focus */
+
+  --text: #ECEFF2;
+  --text-secondary: #8B949E;
+  --text-muted: #616B76;
+
+  /* Accent appears in exactly four places: active tab indicator, primary
+     buttons, focus rings, and the user's pin on the map. Nowhere else. */
+  --accent: #E8843C;
+  --accent-hover: #F09553;
+
+  /* Provenance encodes data, so it is exempt from the accent rule. Each is
+     paired with a shape (filled / ring / half) so the distinction survives
+     colour-vision deficiency and greyscale printing. */
+  --src-published: #5B8C6E;
+  --src-proxy: #C99A3B;
+  --src-assumed: #B0563F;
+  /* Model output is the app's most common row type; folding it into "published"
+     would erase the measured-versus-modeled distinction the product exists to
+     make. It gets a neutral grey and its own shape, not a fourth hue. */
+  --src-modeled: #8B949E;
+
+  /* MMI ramp: matplotlib magma truncated. Unchanged — perceptually uniform,
+     colourblind-safe, monotonic in lightness. Mirrored in src/lib/colors.ts. */
+  --mmi-1: transparent;
+  --mmi-2: #FDDCA6;
+  --mmi-3: #FCC08B;
+  --mmi-4: #F9A17A;
+  --mmi-5: #F2836E;
+  --mmi-6: #E4636A;
+  --mmi-7: #CE4870;
+  --mmi-8: #B03579;
+  --mmi-9: #8A2A80;
+  --mmi-10: #5E1878;
+
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-data: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --panel-w: 460px;
+  --scenario-bar-h: 40px;
+}
